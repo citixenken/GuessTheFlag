@@ -9,47 +9,31 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Text("7")
-                    .padding()
-                Text("8")
-                    .padding()
-                Text("9")
-                    .padding()
+        ZStack {
+            //entire screen background
+            VStack (spacing: 0){
+                Color.red
+                Color.blue
             }
-            HStack {
-                Text("4")
-                    .padding()
-                Text("5")
-                    .padding()
-                Text("6")
-                    .padding()
-            }
-            HStack {
-                Text("1")
-                    .padding()
-                Text("2")
-                    .padding()
-                Text("3")
-                    .padding()
-            }
-            HStack {
-                Text("0")
-                    .padding()
-                Text(".")
-                    .padding()
-                Text("Enter")
-                    .padding()
-            }
-            Spacer()
+            //Color(red: 0.6, green: 0.9, blue: 1)
+                //.ignoresSafeArea()
+                //.frame(width: 400, height: 400)
+                //.frame(minWidth: 200, maxWidth: .infinity, maxHeight: 200)
+                Text("What a day!")
+                    .padding(60)
+                    //.foregroundColor(.secondary)
+                    .foregroundStyle(.secondary) //vibrancy
+                    .background(.ultraThinMaterial) //frosted glass material
         }
+        //background for text
+        .background(.blue)
+        .ignoresSafeArea()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+.previewInterfaceOrientation(.portrait)
     }
 }
