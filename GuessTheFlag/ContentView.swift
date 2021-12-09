@@ -13,6 +13,8 @@ struct ContentView: View {
         print("Here we go...")
     }
     
+    @State private var showingAlert = true
+    
     var body: some View {
         
         ZStack {
@@ -84,6 +86,16 @@ struct ContentView: View {
                 } label: {
                     Image(systemName: "pencil")
                         .scaleEffect(3)
+                }
+                
+                Button("Show Alert") {
+                    showingAlert = false
+                }
+                .alert("Important message", isPresented: $showingAlert) {
+                    Button("Delete", role: .destructive) {}
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("Please read this first.")
                 }
                 
             }
