@@ -14,26 +14,46 @@ struct ContentView: View {
     //    }
     //
     //    @State private var showingAlert = true
-    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "US", "UK"].shuffled()
+    @State private var countries = ["Estonia", "France", "Monaco", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "US", "UK"].shuffled()
     
     @State private var correctAnswer = Int.random(in: 0...2)
     
     @State private var showingScore = false
     @State private var scoreTitle = ""
     
+    @State private var score = 0
+    @State private var questionsAsked = 0
+    @State private var endGame = false
+    @State private var finishTitle = ""
+    
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
-            scoreTitle = "Correct"
+            scoreTitle = "CORRECT!"
+            score += 2
         } else {
-            scoreTitle = "Wrong"
+            scoreTitle = "WRONG! This is the flag of \(countries[number])"
+            score -= 3
         }
         
         showingScore = true
     }
     
+    func reset() {
+        questionsAsked = 0
+        score = 0
+        askQuestion()
+    }
+    
     func askQuestion() {
-        countries.shuffle()
-        correctAnswer = Int.random(in: 0...2)
+        if questionsAsked == 9 { // 10 questions per session
+            finishTitle = "Completed!"
+            endGame = true
+            
+        } else {
+            countries.shuffle()
+            correctAnswer = Int.random(in: 0...2)
+            questionsAsked += 1
+        }
     }
     
     var body: some View {
@@ -76,13 +96,13 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 20)
-                .background(.regularMaterial)
+                .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 Spacer()
                 Spacer()
                 
-                Text("Score: @@@")
+                Text("Score: \(score)")
                     .foregroundColor(.white)
                     .font(.title.weight(.bold))
                 Spacer()
@@ -92,7 +112,13 @@ struct ContentView: View {
         .alert(scoreTitle, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is @@@")
+            Text("Your score is \(score)")
+        }
+        
+        .alert(finishTitle, isPresented: $endGame) {
+            Button("New Game", action: reset)
+        } message: {
+            Text("Your final score is \(score)")
         }
         //
         //        ZStack {
