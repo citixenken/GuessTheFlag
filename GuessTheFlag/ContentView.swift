@@ -211,6 +211,19 @@ struct ContentView: View {
     }
 }
 
+struct FlagImage: View {
+    
+    var countries: [String]
+    var number: Int
+    
+    var body: some View {
+        Image(countries[number])
+            .renderingMode(.original) //render original pixels rather than recolouring them as a button
+            .clipShape(Capsule())
+            .shadow(color: .mint, radius: 5, x: 5, y: 5)
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
