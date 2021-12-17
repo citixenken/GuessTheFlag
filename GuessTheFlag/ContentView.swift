@@ -87,10 +87,13 @@ struct ContentView: View {
                             //flag was tapped
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original) //render original pixels rather than recolouring them as a button
-                                .clipShape(Capsule())
-                                .shadow(color: .mint, radius: 5, x: 5, y: 5)
+                            
+                            FlagImage(flagName: countries[number])
+                            
+//                            Image(countries[number])
+//                                .renderingMode(.original) //render original pixels rather than recolouring them as a button
+//                                .clipShape(Capsule())
+//                                .shadow(color: .mint, radius: 5, x: 5, y: 5)
                         }
                     }
                 }
@@ -213,11 +216,10 @@ struct ContentView: View {
 
 struct FlagImage: View {
     
-    var countries: [String]
-    var number: Int
+    var flagName: String
     
     var body: some View {
-        Image(countries[number])
+        Image(flagName)
             .renderingMode(.original) //render original pixels rather than recolouring them as a button
             .clipShape(Capsule())
             .shadow(color: .mint, radius: 5, x: 5, y: 5)
