@@ -75,12 +75,14 @@ struct ContentView: View {
                 VStack (spacing: 20){
                     VStack {
                         Text("Tap the flag of...")
-                            .foregroundStyle(.secondary)
-                            .font(.subheadline.weight(.heavy))
+                            .titleStyle()
+//                            .foregroundStyle(.secondary)
+//                            .font(.subheadline.weight(.heavy))
                         
                         Text(countries[correctAnswer])
-                            .foregroundColor(.primary)
-                            .font(.largeTitle.weight(.semibold))
+                            .titleStyle()
+//                            .foregroundColor(.primary)
+//                            .font(.largeTitle.weight(.semibold))
                     }
                     ForEach (0..<3) { number in
                         Button {
@@ -223,6 +225,20 @@ struct FlagImage: View {
             .renderingMode(.original) //render original pixels rather than recolouring them as a button
             .clipShape(Capsule())
             .shadow(color: .mint, radius: 5, x: 5, y: 5)
+    }
+}
+
+struct TitleModifier: ViewModifier {
+    func body (content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.green)
+    }
+}
+
+extension View {
+    func titleStyle() -> some View {
+        modifier(TitleModifier())
     }
 }
 
