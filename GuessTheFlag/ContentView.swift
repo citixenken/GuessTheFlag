@@ -26,6 +26,10 @@ struct ContentView: View {
     @State private var endGame = false
     @State private var finishTitle = ""
     
+    //animation
+    @State private var animationAmount = 0.0
+    @State private var opacityAmount = 0.75
+    
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
             scoreTitle = "CORRECT!"
@@ -45,6 +49,7 @@ struct ContentView: View {
     }
     
     func askQuestion() {
+        opacityAmount = 0.75
         if questionsAsked == 9 { // 10 questions per session
             finishTitle = "Completed!"
             endGame = true
@@ -88,6 +93,11 @@ struct ContentView: View {
                         Button {
                             //flag was tapped
                             flagTapped(number)
+                            withAnimation {
+                                //flagTapped(number)
+                                animationAmount += 360
+                                opacityAmount = 1.0
+                            }
                         } label: {
                             
                             FlagImage(flagName: countries[number])
@@ -97,6 +107,9 @@ struct ContentView: View {
 //                                .clipShape(Capsule())
 //                                .shadow(color: .mint, radius: 5, x: 5, y: 5)
                         }
+                        .rotation3DEffect(.degrees((number == correctAnswer) ? animationAmount : 0.0), axis: (x: 0, y: 1, z: 0))
+                        .opacity((number == correctAnswer) ? opacityAmount : 0.75)
+                        
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -104,8 +117,8 @@ struct ContentView: View {
                 .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 
-                Spacer()
-                Spacer()
+                Spacer(minLength: 20)
+                //Spacer()
                 
                 Text("Score: \(score)")
                     .foregroundColor(.white)
